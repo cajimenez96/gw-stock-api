@@ -17,7 +17,7 @@ class UserServices {
   async register(payload: IUser) {
     const user = await this.model.create(payload);
 
-    const token = generateToken({ _id: user._id, email: user.email });
+    const token = generateToken({ _id: user._id, email: user.email, role: user.role });
     return { token };
   }
 
@@ -28,7 +28,7 @@ class UserServices {
     if (user) {
       await verifyPassword(payload.password, user.password);
 
-      const token = generateToken({ _id: user._id, email: user.email });
+      const token = generateToken({ _id: user._id, email: user.email, role: user.role });
       return { token };
     } else {
       throw new CustomError(httpStatus.BAD_REQUEST, 'WrongCredentials');
