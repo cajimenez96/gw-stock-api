@@ -11,7 +11,7 @@ const userSchema = new Schema<IUser>(
     title: { type: String },
     description: { type: String },
     avatar: { type: String },
-    role: { type: String, enum: UserRole, default: 'USER' },
+    role: { type: String, enum: UserRole, default: 'OWNER' },
     status: { type: String, enum: UserStatus, default: 'ACTIVE' },
     address: { type: String },
     phone: { type: String },
