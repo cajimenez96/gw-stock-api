@@ -3,6 +3,7 @@ import userControllers from './user.controllers';
 import validateRequest from '../../middlewares/validateRequest';
 import userValidator from './user.validator';
 import verifyAuth from '../../middlewares/verifyAuth';
+import verifyRole from '../../middlewares/verifyRole';
 
 const userRoutes = Router();
 
@@ -16,5 +17,7 @@ userRoutes.post(
   userControllers.changePassword
 );
 userRoutes.patch('/', verifyAuth, userControllers.updateProfile);
+
+userRoutes.get('/', verifyAuth, verifyRole('OWNER', 'ADMIN'), userControllers.getProfiles)
 
 export default userRoutes;

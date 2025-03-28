@@ -9,6 +9,11 @@ import bcrypt from 'bcrypt';
 class UserServices {
   private model = User;
 
+  //get users
+  async getUsers () {
+    return this.model.find();    
+  }
+
   // get profile
   async getSelf(userId: string) {
     return this.model.findById(userId);
