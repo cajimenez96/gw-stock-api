@@ -90,11 +90,11 @@ class ProductServices extends BaseServices<any> {
   /**
    * Get All product of user
    */
-  async readAll(query: Record<string, unknown> = {}, userId: string) {
-    let data = await this.model.aggregate([...matchStagePipeline(query, userId), ...sortAndPaginatePipeline(query)]);
+  async readAll(query: Record<string, unknown> = {}) {
+    let data = await this.model.aggregate([...matchStagePipeline(query), ...sortAndPaginatePipeline(query)]);
 
     const totalCount = await this.model.aggregate([
-      ...matchStagePipeline(query, userId),
+      ...matchStagePipeline(query),
       {
         $group: {
           _id: null,
@@ -118,9 +118,9 @@ class ProductServices extends BaseServices<any> {
   /**
    * Get Single product of user
    */
-  async read(id: string, userId: string) {
+  async read(id: string) {
     await this._isExists(id);
-    return this.model.findOne({ user: new Types.ObjectId(userId), _id: id });
+    return this.model.findOne({ _id: id });
   }
 
   /**

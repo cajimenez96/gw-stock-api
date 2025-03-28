@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Types } from 'mongoose';
 
-const matchStagePipeline = (query: Record<string, unknown>, userId: string) => {
+const matchStagePipeline = (query: Record<string, unknown>) => {
   let minPrice = 0;
   let maxPrice = Number.MAX_VALUE;
 
@@ -13,7 +13,7 @@ const matchStagePipeline = (query: Record<string, unknown>, userId: string) => {
     maxPrice = Number(query.maxPrice);
   }
 
-  const fieldQuery: any = [{ user: new Types.ObjectId(userId) }, { price: { $gte: minPrice, $lte: maxPrice } }];
+  const fieldQuery: any = [{ price: { $gte: minPrice, $lte: maxPrice } }];
 
   if (query.name) {
     fieldQuery.push({ name: { $regex: new RegExp(query.name as string, 'i') } });

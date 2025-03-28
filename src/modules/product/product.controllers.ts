@@ -38,7 +38,7 @@ class ProductControllers {
    * Get all product of user with query
    */
   readAll = asyncHandler(async (req, res) => {
-    const result = await this.services.readAll(req.query, req.user._id);
+    const result = await this.services.readAll(req.query);
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
@@ -75,7 +75,7 @@ class ProductControllers {
    * Get single product of user
    */
   readSingle = asyncHandler(async (req, res) => {
-    const result = await this.services.read(req.params.id, req.user._id);
+    const result = await this.services.read(req.params.id);
 
     sendResponse(res, {
       success: true,
