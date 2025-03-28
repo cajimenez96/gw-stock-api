@@ -2,9 +2,22 @@ import httpStatus from 'http-status';
 import asyncHandler from '../../lib/asyncHandler';
 import sendResponse from '../../lib/sendResponse';
 import userServices from './user.services';
+import { tableData } from '../../utils/generateTable';
 
 class UserControllers {
   private services = userServices;
+
+  //get all profiles
+  getProfiles = asyncHandler(async (req, res) => {
+    const result = await this.services.getUsers();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: 'Send all profiles!',
+      data: tableData(result)
+    });
+  });
 
   // get self profile
   getSelf = asyncHandler(async (req, res) => {
