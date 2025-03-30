@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node ./dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev:local": "set NODE_ENV=local&& ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev:staging": "set NODE_ENV=staging&& ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "set NODE_ENV=dev&& ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "lint": "eslint src --ignore-path .eslintignore --ext .ts",
     "lint:fix": "npx eslint src --fix",
