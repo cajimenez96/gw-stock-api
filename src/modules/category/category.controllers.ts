@@ -20,7 +20,7 @@ class CategoryController {
 
   // read
   getAll = asyncHandler(async (req, res) => {
-    const result = await this.services.getAll();
+    const result = await this.services.getAll(req.user._id);
 
     sendResponse(res, {
       success: true,
