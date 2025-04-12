@@ -43,6 +43,18 @@ class UserControllers {
     });
   });
 
+  //register new user from admin
+  registerNewUser = asyncHandler(async (req, res) => {
+    const result = await this.services.registerNewUser(req.user._id, req.body)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: 'User registered successfully!',
+      data: result
+    });
+  })
+
   // login into your registered account
   login = asyncHandler(async (req, res) => {
     const result = await this.services.login(req.body);
