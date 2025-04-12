@@ -8,6 +8,12 @@ import verifyRole from '../../middlewares/verifyRole';
 const userRoutes = Router();
 
 userRoutes.post('/register', validateRequest(userValidator.registerSchema), userControllers.register);
+userRoutes.post(
+  '/register-new-user',
+  verifyAuth,
+  validateRequest(userValidator.registerNewUserSchema),
+  userControllers.registerNewUser
+);
 userRoutes.post('/login', validateRequest(userValidator.loginSchema), userControllers.login);
 userRoutes.get('/self', verifyAuth, userControllers.getSelf);
 userRoutes.post(

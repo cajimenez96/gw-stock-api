@@ -26,6 +26,17 @@ class UserServices {
     return { token };
   }
 
+  //register new user by admin
+  async registerNewUser(userId: string, payload: IUser) {
+    const admin = await this.model.findById(userId);
+
+    if (admin?.role !== 'SELLER') {
+      await this.register(payload)
+    } else {
+      throw new CustomError(httpStatus.BAD_REQUEST, 'UserInvalid');
+    }
+  }
+
   // login existing user
   async login(payload: { email: string; password: string }) {
     const user = await this.model.findOne({ email: payload.email }).select('+password');
