@@ -2,9 +2,22 @@ import httpStatus from 'http-status';
 import asyncHandler from '../../lib/asyncHandler';
 import sendResponse from '../../lib/sendResponse';
 import userServices from './user.services';
+import { tableData } from '../../utils/generateTable';
 
 class UserControllers {
   private services = userServices;
+
+  //get all profiles
+  getProfiles = asyncHandler(async (req, res) => {
+    const result = await this.services.getUsers();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: 'Send all profiles!',
+      data: tableData(result)
+    });
+  });
 
   // get self profile
   getSelf = asyncHandler(async (req, res) => {
@@ -29,6 +42,18 @@ class UserControllers {
       data: result
     });
   });
+
+  //register new user from admin
+  registerNewUser = asyncHandler(async (req, res) => {
+    const result = await this.services.registerNewUser(req.user._id, req.body)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: 'User registered successfully!',
+      data: result
+    });
+  })
 
   // login into your registered account
   login = asyncHandler(async (req, res) => {

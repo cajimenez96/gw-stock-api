@@ -8,19 +8,12 @@ const userSchema = new Schema<IUser>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: 0 },
-    title: { type: String },
-    description: { type: String },
     avatar: { type: String },
-    role: { type: String, enum: UserRole, default: 'USER' },
+    role: { type: String, enum: UserRole, default: 'OWNER' },
     status: { type: String, enum: UserStatus, default: 'ACTIVE' },
     address: { type: String },
     phone: { type: String },
     city: { type: String },
-    country: { type: String },
-    facebook: { type: String },
-    twitter: { type: String },
-    linkedin: { type: String },
-    instagram: { type: String }
   },
   { timestamps: true }
 );

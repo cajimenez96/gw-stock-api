@@ -9,6 +9,11 @@ import bcrypt from 'bcrypt';
 class UserServices {
   private model = User;
 
+  //get users
+  async getUsers () {
+    return this.model.find();    
+  }
+
   // get profile
   async getSelf(userId: string) {
     return this.model.findById(userId);
@@ -17,8 +22,19 @@ class UserServices {
   async register(payload: IUser) {
     const user = await this.model.create(payload);
 
-    const token = generateToken({ _id: user._id, email: user.email });
+    const token = generateToken({ _id: user._id, email: user.email, role: user.role });
     return { token };
+  }
+
+  //register new user by admin
+  async registerNewUser(userId: string, payload: IUser) {
+    const admin = await this.model.findById(userId);
+
+    if (admin?.role !== 'SELLER') {
+      await this.register(payload)
+    } else {
+      throw new CustomError(httpStatus.BAD_REQUEST, 'UserInvalid');
+    }
   }
 
   // login existing user
@@ -28,7 +44,7 @@ class UserServices {
     if (user) {
       await verifyPassword(payload.password, user.password);
 
-      const token = generateToken({ _id: user._id, email: user.email });
+      const token = generateToken({ _id: user._id, email: user.email, role: user.role });
       return { token };
     } else {
       throw new CustomError(httpStatus.BAD_REQUEST, 'WrongCredentials');

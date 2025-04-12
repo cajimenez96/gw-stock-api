@@ -11,7 +11,7 @@ class BrandServices extends BaseServices<any> {
    * Read all category of user
    */
   async getAll(userId: string) {
-    return this.model.find({ user: userId });
+    return this.model.find({ user: userId});
   }
 }
 

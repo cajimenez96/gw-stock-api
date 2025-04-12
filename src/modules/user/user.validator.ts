@@ -6,6 +6,16 @@ const registerSchema = z.object({
   password: z.string().min(6, { message: 'password must have 6 characters' })
 });
 
+const registerNewUserSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string().min(6, { message: 'password must have 6 characters' }),
+  role: z.string().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+  phone: z.string().optional(),
+});
+
 const updatedProfileSchema = z.object({
   name: z.string().optional(),
   title: z.string().optional(),
@@ -27,5 +37,11 @@ const changePasswordSchema = z.object({
     .min(6, { message: 'new password must have 6 characters' })
 });
 
-const userValidator = { registerSchema, loginSchema, updatedProfileSchema, changePasswordSchema };
+const userValidator = {
+  registerSchema,
+  registerNewUserSchema,
+  loginSchema,
+  updatedProfileSchema,
+  changePasswordSchema
+};
 export default userValidator;

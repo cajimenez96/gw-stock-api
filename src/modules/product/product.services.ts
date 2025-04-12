@@ -91,7 +91,7 @@ class ProductServices extends BaseServices<any> {
    * Get All product of user
    */
   async readAll(query: Record<string, unknown> = {}, userId: string) {
-    let data = await this.model.aggregate([...matchStagePipeline(query, userId), ...sortAndPaginatePipeline(query)]);
+    let data = await this.model.aggregate([...matchStagePipeline(query), ...sortAndPaginatePipeline(query, userId)]);
 
     const totalCount = await this.model.aggregate([
       ...matchStagePipeline(query, userId),
